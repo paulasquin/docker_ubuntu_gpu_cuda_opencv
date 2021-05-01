@@ -48,10 +48,5 @@ RUN cd /opt/ &&\
 
 # Python dependencies
 RUN pip3 install --upgrade pip
-COPY requirements-heavy.txt /tmp/requirements-heavy.txt
-RUN pip install -r /tmp/requirements-heavy.txt
-
-COPY requirements.txt /tmp/requirements.txt
-RUN pip install -r /tmp/requirements.txt
 
 CMD /bin/bash
