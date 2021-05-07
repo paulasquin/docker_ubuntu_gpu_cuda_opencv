@@ -10,6 +10,10 @@ RUN apt-get update && \
 
 # libopencv-dev
 
+# Python dependencies
+RUN pip3 install --upgrade pip && \
+    pip install numpy
+
 # Install OpenCV CUDA
 ARG OPENCV_VERSION=4.5.0
 
@@ -33,7 +37,14 @@ RUN cd /opt/ &&\
     cmake \
         -DOPENCV_EXTRA_MODULES_PATH=/opt/opencv_contrib-${OPENCV_VERSION}/modules \
         -DWITH_CUDA=ON \
+        -DWITH_CUDNN=ON \
         -DOPENCV_DNN_CUDA=ON \
+        -DWITH_CUBLAS=1 \
+        -DCUDA_FAST_MATH=1 \
+        -DCUDA_ARCH_BIN=7.5 \
+        -DBUILD_opencv_python2=Off \
+        -DBUILD_opencv_python3=ON \
+	    -DHAVE_opencv_python3=ON \
         -DCMAKE_BUILD_TYPE=RELEASE \
         # Install path will be /usr/local/lib (lib is implicit)
         -DCMAKE_INSTALL_PREFIX=/usr/local \
@@ -46,7 +57,6 @@ RUN cd /opt/ &&\
     # Remove OpenCV sources and build folder
     rm -rf /opt/opencv-${OPENCV_VERSION} && rm -rf /opt/opencv_contrib-${OPENCV_VERSION}
 
-# Python dependencies
-RUN pip3 install --upgrade pip
+
 
 CMD /bin/bash
