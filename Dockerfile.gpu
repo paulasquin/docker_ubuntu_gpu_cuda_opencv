@@ -6,7 +6,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && \
     apt-get install -y software-properties-common && \
     apt-get install -y python3-pip git libexiv2-dev libz-dev libexpat-dev libjpeg-dev cmake build-essential \
-    python3-dev libimage-exiftool-perl curl gcc-5 g++-5 wget libsm6 libxext6 libxrender-dev
+    python3-dev libimage-exiftool-perl curl gcc-5 g++-5 wget libsm6 libxext6 libxrender-dev ffmpeg
 
 # libopencv-dev
 
@@ -15,7 +15,7 @@ RUN pip3 install --upgrade pip && \
     pip install numpy
 
 # Install OpenCV CUDA
-ARG OPENCV_VERSION=4.5.0
+ARG OPENCV_VERSION=4.5.2.52
 
 RUN apt-get update && apt-get upgrade -y &&\
     # Install build tools, build dependencies and python
@@ -41,11 +41,14 @@ RUN cd /opt/ &&\
         -DOPENCV_DNN_CUDA=ON \
         -DWITH_CUBLAS=1 \
         -DCUDA_FAST_MATH=1 \
+        -DWITH_FFMPEG=ON \
         -DCUDA_ARCH_BIN=7.5 \
-        -DBUILD_opencv_python2=Off \
+        -DBUILD_opencv_python2=ON \
         -DBUILD_opencv_python3=ON \
 	    -DHAVE_opencv_python3=ON \
-        -DCMAKE_BUILD_TYPE=RELEASE \
+	    -DPYTHON_DEFAULT_EXECUTABLE=/usr/bin/python3 \
+	    -DCMAKE_BUILD_TYPE=RELEASE \
+	    -DPYTHON_PACKAGES_PATH=/usr/local/lib/python3.6/dist-packages/ \
         # Install path will be /usr/local/lib (lib is implicit)
         -DCMAKE_INSTALL_PREFIX=/usr/local \
         .. &&\
