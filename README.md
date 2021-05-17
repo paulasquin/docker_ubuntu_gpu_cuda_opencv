@@ -2,7 +2,7 @@
 
 ## Compile
 ```bash
-sudo docker build -t ubuntu_gpu_cuda_opencv:latest -f Dockerfile.gpu .
+docker build -t ubuntu_gpu_cuda_opencv:latest -f Dockerfile.gpu .
 ```
 The docker image will take a will to compile 
 due to OpenCV GPU-ready project building. 
@@ -22,4 +22,20 @@ docker login
 - Then push
 ```bash
 docker push paulasquin/ubuntu_gpu_cuda_opencv:latest
+```
+
+## Mediapipe image
+If you want to compile the mediapipe ready container:
+- Build with ubuntu_gpu_cuda_opencv:latest
+```bash
+docker build -t ubuntu_gpu_cuda_opencv:latest-mediapipe -f Dockerfile-mediapipe.gpu .
+```
+- Tag to 
+```bash
+docker tag ubuntu_gpu_cuda_opencv:latest-mediapipe paulasquin/ubuntu_gpu_cuda_opencv:latest-mediapipe
+```
+- Then push
+- Then push
+```bash
+docker push paulasquin/ubuntu_gpu_cuda_opencv:latest-mediapipe
 ```
