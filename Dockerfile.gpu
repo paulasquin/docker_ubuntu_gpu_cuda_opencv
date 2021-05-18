@@ -15,7 +15,7 @@ RUN pip3 install --upgrade pip && \
     pip install numpy
 
 # Install OpenCV CUDA
-ARG OPENCV_VERSION=4.5.2.52
+ARG OPENCV_VERSION=4.5.2
 
 RUN apt-get update && apt-get upgrade -y &&\
     # Install build tools, build dependencies and python
