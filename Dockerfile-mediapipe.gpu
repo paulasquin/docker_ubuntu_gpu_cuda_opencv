@@ -1,0 +1,25 @@
+FROM ubuntu_gpu_cuda_opencv:latest
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Python dependencies
+RUN pip3 install --upgrade pip
+
+# Install mediapipe
+WORKDIR /opt/mediapipe
+
+RUN apt-get update && \
+    apt-get install -y protobuf-compiler libprotobuf-dev npm \
+    libopencv-core-dev libopencv-highgui-dev \
+    libopencv-calib3d-dev libopencv-features2d-dev \
+    libopencv-imgproc-dev libopencv-video-dev
+
+RUN npm install -g @bazel/bazelisk
+RUN pip install absl-py attrs>=19.1.0 numpy protobuf>=3.11.4 google google-cloud six wheel
+
+RUN git clone https://github.com/google/mediapipe.git && \
+    cd mediapipe && \
+    python3 setup.py gen_protos && \
+    python3 setup.py install --link-opencv
+
+CMD /bin/bash
