@@ -16,6 +16,7 @@ RUN pip3 install --upgrade pip && \
 
 # Install OpenCV CUDA
 ARG OPENCV_VERSION=4.5.2
+ARG CUDA_ARCH_BIN=7.5
 
 RUN apt-get update && apt-get upgrade -y &&\
     # Install build tools, build dependencies and python
@@ -42,7 +43,7 @@ RUN cd /opt/ &&\
         -DWITH_CUBLAS=1 \
         -DCUDA_FAST_MATH=1 \
         -DWITH_FFMPEG=ON \
-        -DCUDA_ARCH_BIN=7.5 \
+        -DCUDA_ARCH_BIN=${CUDA_ARCH_BIN} \
         -DBUILD_opencv_python2=ON \
         -DBUILD_opencv_python3=ON \
 	    -DHAVE_opencv_python3=ON \
