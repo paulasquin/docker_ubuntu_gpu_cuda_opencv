@@ -1,6 +1,8 @@
 # Docker Ubuntu GPU CUDA OpenCV
 
 ## Compile
+First, check your GPU CUDA compute capability at [this address](https://en.wikipedia.org/wiki/CUDA#GPUs_supported) and 
+report the CUDA_ARCH_BIN version within [Dockerfile.gpu](/Dockerfile.gpu)
 ```bash
 docker build -t ubuntu_gpu_cuda_opencv:latest -f Dockerfile.gpu .
 ```
